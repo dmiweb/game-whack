@@ -5,18 +5,33 @@ export default class Game {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  gridGenerator() {
+    document
+      .querySelector("body")
+      .insertAdjacentHTML("beforeEnd", '<div class="container"></div>');
+    for (let i = 0; i < 16; i++) {
+      document
+        .querySelector(".container")
+        .insertAdjacentHTML("beforeEnd", '<div class="cell"></div>');
+    }
+  }
+
   start() {
-    const cells = document.querySelectorAll(".cell");
-    let indexRandom = this.getRandomNumber(0, cells.length - 1);
+    this.gridGenerator();
 
-    while (cells[indexRandom].classList.contains('goblin')) {
-      indexRandom = this.getRandomNumber(0, cells.length - 1);
-    }
+    setInterval(() => {
+      const cells = document.querySelectorAll(".cell");
+      let indexRandom = this.getRandomNumber(0, cells.length - 1);
 
-    for (const cell of cells) {
-      cell.classList.remove("goblin");
-    }
+      while (cells[indexRandom].classList.contains("goblin")) {
+        indexRandom = this.getRandomNumber(0, cells.length - 1);
+      }
 
-    cells[indexRandom].classList.add("goblin");
+      for (const cell of cells) {
+        cell.classList.remove("goblin");
+      }
+
+      cells[indexRandom].classList.add("goblin");
+    }, 1000);
   }
 }
